@@ -7,7 +7,7 @@ export default defineConfig((env: ConfigEnv): UserConfig => {
       port: 5000,
     },
     root: './',
-    base: '/',
+    base: '/live2d-preview/dist/',
     publicDir: './public',
     resolve: {
       extensions: ['.ts', '.js'],
