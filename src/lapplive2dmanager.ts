@@ -149,6 +149,10 @@ export class LAppLive2DManager {
     this.releaseAllModel();
     const instance = new LAppModel();
     instance.setSubdelegate(this._subdelegate);
+    console.log('ResourcesPath =', LAppDefine.ResourcesPath);
+    console.log('ModelDir[index] =', LAppDefine.ModelDir[index]);
+    console.log('modelPath =', modelPath);
+    console.log('modelJsonName =', modelJsonName);
     instance.loadAssets(modelPath, modelJsonName);
     this._models.push(instance);
   }
