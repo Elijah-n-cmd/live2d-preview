@@ -33,7 +33,7 @@ export const ViewLogicalMaxBottom = -2.0;
 export const ViewLogicalMaxTop = 2.0;
 
 // 相対パス
-export const ResourcesPath = '../../Resources/';
+export const ResourcesPath = 'Resources/';
 
 // シェーダー相対パス
 export const ShaderPath = '../../Framework/Shaders/WebGL/';
