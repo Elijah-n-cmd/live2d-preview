@@ -36,7 +36,7 @@ export const ViewLogicalMaxTop = 2.0;
 export const ResourcesPath = 'Resources/';
 
 // シェーダー相対パス
-export const ShaderPath = '../../Framework/Shaders/WebGL/';
+export const ShaderPath = 'Framework/Shaders/WebGL/';
 
 // モデルの後ろにある背景の画像ファイル
 export const BackImageName = 'back_class_normal.png';
