@@ -1,30 +1,35 @@
 {
-	"Version": 3,
-	"FileReferences": {
-		"Moc": "preview.moc3",
-		"Textures": [
-			"textures/texture_00.png",
-			"textures/texture_01.png"
-		],
-		"Physics": "preview.physics3.json"
-	},
-	"Groups": [
-		{
-			"Target": "Parameter",
-			"Name": "EyeBlink",
-			"Ids": [
-				"ParamEyeLOpen",
-				"ParamEyeROpen"
-			]
-		},
-		{
-			"Target": "Parameter",
-			"Name": "LipSync",
-			"Ids": [
-				"ParamMouthForm",
-				"ParamMouthOpenY"
-			]
-		}
-	],
-	"HitAreas": []
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "preview.moc3",
+    "Textures": [
+      "textures/texture_00.png",
+      "textures/texture_01.png"
+    ],
+    "Physics": "preview.physics3.json"
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": [
+        "ParamMouthForm",
+        "ParamMouthOpenY"
+      ]
+    }
+  ],
+  "HitAreas": [],
+  "Layout": {
+    "CenterX": 0.0,
+    "CenterY": 0.0,
+    "Width": 2.2
+  }
 }
