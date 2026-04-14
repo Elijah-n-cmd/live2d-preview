@@ -5,6 +5,9 @@
  * that can be found at https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html.
  */
 
+console.log('DEBUG BUILD 2026-04-15 A');
+document.title = 'DEBUG BUILD 2026-04-15 A';
+
 import { LAppDelegate } from './lappdelegate';
 import * as LAppDefine from './lappdefine';
 

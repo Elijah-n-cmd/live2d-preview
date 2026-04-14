@@ -91,25 +91,29 @@ export class LAppModel extends CubismUserModel {
   public loadAssets(dir: string, fileName: string): void {
     this._modelHomeDir = dir;
 
-    fetch(`${this._modelHomeDir}${fileName}`)
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => {
-        const setting: ICubismModelSetting = new CubismModelSettingJson(
-          arrayBuffer,
-          arrayBuffer.byteLength
-        );
+      console.log('loadAssets dir =', dir);
+      console.log('loadAssets fileName =', fileName)
+      console.log('loadAssets full =', `${this._modelHomeDir}${fileName}`);
 
-        // ステートを更新
-        this._state = LoadStep.LoadModel;
+      fetch(`${this._modelHomeDir}${fileName}`)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => {
+          const setting: ICubismModelSetting = new CubismModelSettingJson(
+            arrayBuffer,
+            arrayBuffer.byteLength
+          );
 
-        // 結果を保存
-        this.setupModel(setting);
-      })
-      .catch(error => {
-        // model3.json読み込みでエラーが発生した時点で描画は不可能なので、setupせずエラーをcatchして何もしない
-        CubismLogError(`Failed to load file ${this._modelHomeDir}${fileName}`);
-      });
-  }
+          // ステートを更新
+          this._state = LoadStep.LoadModel;
+
+          // 結果を保存
+          this.setupModel(setting);
+        })
+        .catch(error => {
+          // model3.json読み込みでエラーが発生した時点で描画は不可能なので、setupせずエラーをcatchして何もしない
+          CubismLogError(`Failed to load file ${this._modelHomeDir}${fileName}`);
+        });
+    }
 
   /**
    * model3.jsonからモデルを生成する。

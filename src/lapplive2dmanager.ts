@@ -134,6 +134,10 @@ export class LAppLive2DManager {
   private changeScene(index: number): void {
     this._sceneIndex = index;
 
+    console.log('changeScene called');
+    console.log('ResourcesPath =', LAppDefine.ResourcesPath);
+    console.log('ModelDir[index] =', LAppDefine.ModelDir[index]);
+
     if (LAppDefine.DebugLogEnable) {
       LAppPal.printMessage(`[APP]model index: ${this._sceneIndex}`);
     }
