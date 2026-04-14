@@ -134,17 +134,6 @@ export class LAppLive2DManager {
   private changeScene(index: number): void {
   this._sceneIndex = index;
 
-  const model: string = LAppDefine.ModelDir[index];
-  const modelPath: string = LAppDefine.ResourcesPath + model + '/';
-  let modelJsonName: string = LAppDefine.ModelDir[index];
-  modelJsonName += '.model3.json';
-
-  console.log('changeScene called');
-  console.log('ResourcesPath =', LAppDefine.ResourcesPath);
-  console.log('ModelDir[index] =', LAppDefine.ModelDir[index]);
-  console.log('modelPath =', modelPath);
-  console.log('modelJsonName =', modelJsonName);
-
     if (LAppDefine.DebugLogEnable) {
       LAppPal.printMessage(`[APP]model index: ${this._sceneIndex}`);
     }
@@ -160,6 +149,7 @@ export class LAppLive2DManager {
     this.releaseAllModel();
     const instance = new LAppModel();
     instance.setSubdelegate(this._subdelegate);
+    console.log('changeScene called');
     console.log('ResourcesPath =', LAppDefine.ResourcesPath);
     console.log('ModelDir[index] =', LAppDefine.ModelDir[index]);
     console.log('modelPath =', modelPath);
