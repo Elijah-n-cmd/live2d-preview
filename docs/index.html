@@ -21,12 +21,84 @@
       width: 100vw;
       height: 100vh;
     }
+
+    /* ========== ローディング画面 ========== */
+    #l2d-loading {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      gap: 0;
+    }
+    #l2d-loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #l2d-bar-wrap {
+      width: min(60vw, 400px);
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    #l2d-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff8fe0, #b48aff, #8ab4ff);
+      background-size: 200% 100%;
+      border-radius: 99px;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: barShimmer 2s linear infinite;
+    }
+    @keyframes barShimmer {
+      0%   { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+    #l2d-percent {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+    }
+    #l2d-caption {
+      font-family: 'Helvetica Neue', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      text-align: center;
+      animation: blink 1.8s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.15; }
+    }
   </style>
   <!-- Live2DCubismCore script -->
-  <script src = "./Core/live2dcubismcore.js"></script>
+  <script src="./Core/live2dcubismcore.js"></script>
   <!-- Build script -->
   <script type="module" crossorigin src="/live2d-preview/assets/index-DK0W18vF.js"></script>
 </head>
 <body>
+
+  <div id="l2d-loading">
+    <div id="l2d-bar-wrap">
+      <div id="l2d-bar"></div>
+    </div>
+    <div id="l2d-percent">0%</div>
+    <div id="l2d-caption">
+      ローディング中<br>
+      <span style="font-size:10px;">環境により最大30秒ほどお待ち頂く場合がございます。</span>
+    </div>
+  </div>
+
 </body>
 </html>
