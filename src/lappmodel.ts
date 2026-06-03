@@ -79,6 +79,31 @@ enum LoadStep {
 }
 
 /**
+ * ローディングバーを更新する。
+ * LoadStep の数値が 0〜CompleteSetup に対応し、進捗を %表示する。
+ * CompleteSetup に達したらローディング画面をフェードアウトして除去する。
+ */
+function updateLoadingUI(step: LoadStep): void {
+  const total = LoadStep.CompleteSetup as number; // = 23
+  const percent = Math.min(100, Math.round((step / total) * 100));
+
+  const bar     = document.getElementById('l2d-bar');
+  const pct     = document.getElementById('l2d-percent');
+  const screen  = document.getElementById('l2d-loading');
+
+  if (bar)  bar.style.width    = `${percent}%`;
+  if (pct)  pct.textContent    = `${percent}%`;
+
+  if (step === LoadStep.CompleteSetup && screen) {
+    // 少し待ってからフェードアウト → DOM除去
+    setTimeout(() => {
+      screen.classList.add('fade-out');
+      screen.addEventListener('transitionend', () => screen.remove(), { once: true });
+    }, 200);
+  }
+}
+
+/**
  * ユーザーが実際に使用するモデルの実装クラス<br>
  * モデル生成、機能コンポーネント生成、更新処理とレンダリングの呼び出しを行う。
  */
@@ -105,6 +130,7 @@ export class LAppModel extends CubismUserModel {
 
           // ステートを更新
           this._state = LoadStep.LoadModel;
+          updateLoadingUI(this._state);
 
           // 結果を保存
           this.setupModel(setting);
@@ -145,12 +171,14 @@ export class LAppModel extends CubismUserModel {
         .then(arrayBuffer => {
           this.loadModel(arrayBuffer, this._mocConsistency);
           this._state = LoadStep.LoadExpression;
+          updateLoadingUI(this._state);
 
           // callback
           loadCubismExpression();
         });
 
       this._state = LoadStep.WaitLoadModel;
+      updateLoadingUI(this._state);
     } else {
       LAppPal.printMessage('Model data does not exist.');
     }
@@ -203,6 +231,7 @@ export class LAppModel extends CubismUserModel {
                 }
 
                 this._state = LoadStep.LoadPhysics;
+                updateLoadingUI(this._state);
 
                 // callback
                 loadCubismPhysics();
@@ -210,8 +239,10 @@ export class LAppModel extends CubismUserModel {
             });
         }
         this._state = LoadStep.WaitLoadExpression;
+        updateLoadingUI(this._state);
       } else {
         this._state = LoadStep.LoadPhysics;
+        updateLoadingUI(this._state);
 
         // callback
         loadCubismPhysics();
@@ -244,13 +275,16 @@ export class LAppModel extends CubismUserModel {
             }
 
             this._state = LoadStep.LoadPose;
+            updateLoadingUI(this._state);
 
             // callback
             loadCubismPose();
           });
         this._state = LoadStep.WaitLoadPhysics;
+        updateLoadingUI(this._state);
       } else {
         this._state = LoadStep.LoadPose;
+        updateLoadingUI(this._state);
 
         // callback
         loadCubismPose();
@@ -283,13 +317,16 @@ export class LAppModel extends CubismUserModel {
             }
 
             this._state = LoadStep.SetupEyeBlink;
+            updateLoadingUI(this._state);
 
             // callback
             setupEyeBlink();
           });
         this._state = LoadStep.WaitLoadPose;
+        updateLoadingUI(this._state);
       } else {
         this._state = LoadStep.SetupEyeBlink;
+        updateLoadingUI(this._state);
 
         // callback
         setupEyeBlink();
@@ -308,6 +345,7 @@ export class LAppModel extends CubismUserModel {
       }
 
       this._state = LoadStep.SetupBreath;
+      updateLoadingUI(this._state);
 
       // callback
       setupBreath();
@@ -345,6 +383,7 @@ export class LAppModel extends CubismUserModel {
       this._updateScheduler.addUpdatableList(breathUpdater);
 
       this._state = LoadStep.LoadUserData;
+      updateLoadingUI(this._state);
 
       // callback
       loadUserData();
@@ -370,14 +409,17 @@ export class LAppModel extends CubismUserModel {
             this.loadUserData(arrayBuffer, arrayBuffer.byteLength);
 
             this._state = LoadStep.SetupEyeBlinkIds;
+            updateLoadingUI(this._state);
 
             // callback
             setupEyeBlinkIds();
           });
 
         this._state = LoadStep.WaitLoadUserData;
+        updateLoadingUI(this._state);
       } else {
         this._state = LoadStep.SetupEyeBlinkIds;
+        updateLoadingUI(this._state);
 
         // callback
         setupEyeBlinkIds();
@@ -395,6 +437,7 @@ export class LAppModel extends CubismUserModel {
       }
 
       this._state = LoadStep.SetupLipSyncIds;
+      updateLoadingUI(this._state);
 
       // callback
       setupLipSyncIds();
@@ -419,6 +462,7 @@ export class LAppModel extends CubismUserModel {
       }
 
       this._state = LoadStep.SetupLook;
+      updateLoadingUI(this._state);
 
       // callback
       setupLook();
@@ -466,6 +510,7 @@ export class LAppModel extends CubismUserModel {
       this._updateScheduler.sortUpdatableList();
 
       this._state = LoadStep.SetupLayout;
+      updateLoadingUI(this._state);
 
       // callback
       setupLayout();
@@ -483,6 +528,7 @@ export class LAppModel extends CubismUserModel {
       this._modelSetting.getLayoutMap(layout);
       this._modelMatrix.setupFromLayout(layout);
       this._state = LoadStep.LoadMotion;
+      updateLoadingUI(this._state);
 
       // callback
       loadCubismMotion();
@@ -491,6 +537,7 @@ export class LAppModel extends CubismUserModel {
     // Motion
     const loadCubismMotion = (): void => {
       this._state = LoadStep.WaitLoadMotion;
+      updateLoadingUI(this._state);
       this._model.saveParameters();
       this._allMotionCount = 0;
       this._motionCount = 0;
@@ -512,6 +559,7 @@ export class LAppModel extends CubismUserModel {
       // モーションがない場合
       if (motionGroupCount == 0) {
         this._state = LoadStep.LoadTexture;
+        updateLoadingUI(this._state);
 
         // 全てのモーションを停止する
         this._motionManager.stopAllMotions();
@@ -566,6 +614,7 @@ export class LAppModel extends CubismUserModel {
           if (this._textureCount >= textureCount) {
             // ロード完了
             this._state = LoadStep.CompleteSetup;
+            updateLoadingUI(this._state);
           }
         };
 
@@ -577,6 +626,7 @@ export class LAppModel extends CubismUserModel {
       }
 
       this._state = LoadStep.WaitLoadTexture;
+      updateLoadingUI(this._state);
     }
   }
 
@@ -881,6 +931,7 @@ export class LAppModel extends CubismUserModel {
 
           if (this._motionCount >= this._allMotionCount) {
             this._state = LoadStep.LoadTexture;
+            updateLoadingUI(this._state);
 
             // 全てのモーションを停止する
             this._motionManager.stopAllMotions();
