@@ -104,18 +104,20 @@ export class LAppView {
     if (this._back) {
       this._back.render(this._programId);
     }
+
+    // モデルを先に描画
+    const lapplive2dmanager = this._subdelegate.getLive2DManager();
+    if (lapplive2dmanager != null) {
+      lapplive2dmanager.setViewMatrix(this._viewMatrix);
+      lapplive2dmanager.onUpdate();
+    }
+
+    // ギアを最後に描画（最前面）
     if (this._gear) {
       this._gear.render(this._programId);
     }
 
     this._subdelegate.getGlManager().getGl().flush();
-
-    const lapplive2dmanager = this._subdelegate.getLive2DManager();
-    if (lapplive2dmanager != null) {
-      lapplive2dmanager.setViewMatrix(this._viewMatrix);
-
-      lapplive2dmanager.onUpdate();
-    }
   }
 
   /**
