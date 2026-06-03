@@ -156,12 +156,12 @@ export class LAppView {
        const iconSize = 64;
        const margin = 16;
        const x = width - iconSize * 0.5 - margin;
-       const y = iconSize * 0.5 + margin;
+       const y = height - iconSize * 0.5 - margin;  // ← ここ！heightから引く
        const fwidth = iconSize;
        const fheight = iconSize;
        this._gear = new LAppSprite(x, y, fwidth, fheight, textureInfo.id);
        this._gear.setSubdelegate(this._subdelegate);
-    };
+     };
 
     textureManager.createTextureFromPngFile(
       resourcesPath + imageName,
