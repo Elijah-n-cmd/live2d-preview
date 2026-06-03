@@ -151,15 +151,17 @@ export class LAppView {
     );
 
     // 歯車画像初期化
-    imageName = LAppDefine.GearImageName;
-    const initGearTexture = (textureInfo: TextureInfo): void => {
-      const x = width - textureInfo.width * 0.5;
-      const y = height - textureInfo.height * 0.5;
-      const fwidth = textureInfo.width;
-      const fheight = textureInfo.height;
-      this._gear = new LAppSprite(x, y, fwidth, fheight, textureInfo.id);
-      this._gear.setSubdelegate(this._subdelegate);
-    };
+     imageName = LAppDefine.GearImageName;
+     const initGearTexture = (textureInfo: TextureInfo): void => {
+       const iconSize = 64 * window.devicePixelRatio;  // 表示サイズ固定（お好みで変更OK）
+       const margin = 16 * window.devicePixelRatio;     // 右上からのマージン
+       const x = width - iconSize * 0.5 - margin;
+       const y = iconSize * 0.5 + margin;
+       const fwidth = iconSize;
+       const fheight = iconSize;
+       this._gear = new LAppSprite(x, y, fwidth, fheight, textureInfo.id);
+       this._gear.setSubdelegate(this._subdelegate);
+     };
 
     textureManager.createTextureFromPngFile(
       resourcesPath + imageName,
