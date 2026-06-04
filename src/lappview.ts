@@ -99,25 +99,26 @@ export class LAppView {
    * 描画する。
    */
   public render(): void {
-    this._subdelegate.getGlManager().getGl().useProgram(this._programId);
+    const gl = this._subdelegate.getGlManager().getGl();
+    gl.useProgram(this._programId);
 
     if (this._back) {
       this._back.render(this._programId);
     }
 
-    // モデルを先に描画
     const lapplive2dmanager = this._subdelegate.getLive2DManager();
     if (lapplive2dmanager != null) {
       lapplive2dmanager.setViewMatrix(this._viewMatrix);
       lapplive2dmanager.onUpdate();
     }
 
-    // ギアを最後に描画（最前面）
+    // モデル描画後にシェーダーを再セットしてギアを最前面に
+    gl.useProgram(this._programId);
     if (this._gear) {
       this._gear.render(this._programId);
     }
 
-    this._subdelegate.getGlManager().getGl().flush();
+    gl.flush();
   }
 
   /**
