@@ -566,13 +566,15 @@ export class LAppModel extends CubismUserModel {
 
         this._updating = false;
         this._initialized = true;
-
         this.createRenderer(
           this._subdelegate.getCanvas().width,
           this._subdelegate.getCanvas().height
         );
         this.setupTextures();
-        this.getRenderer().startUp(this._subdelegate.getGlManager().getGl());
+        this.getRenderer().startUp(
+          this._subdelegate.getGlManager().getGl()
+        );
+        this.getRenderer().initialize(this.getModel(), 2);
         this.getRenderer().loadShaders(LAppDefine.ShaderPath);
       }
     };
@@ -640,6 +642,11 @@ export class LAppModel extends CubismUserModel {
       this._subdelegate.getCanvas().height
     );
     this.setupTextures();
+    this.getRenderer().startUp(
+      this._subdelegate.getGlManager().getGl()
+    );
+    this.getRenderer().initialize(this.getModel(), 2);
+    this.getRenderer().loadShaders(LAppDefine.ShaderPath);
   }
 
   /**
@@ -947,7 +954,9 @@ export class LAppModel extends CubismUserModel {
             this.getRenderer().startUp(
               this._subdelegate.getGlManager().getGl()
             );
+            this.getRenderer().initialize(this.getModel(), 2);
             this.getRenderer().loadShaders(LAppDefine.ShaderPath);
+
           }
         });
     }
