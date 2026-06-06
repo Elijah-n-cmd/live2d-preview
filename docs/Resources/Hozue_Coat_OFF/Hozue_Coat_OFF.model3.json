@@ -1,0 +1,29 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "Hozue_Coat_OFF.moc3",
+		"Textures": [
+			"textures/texture_00.png",
+			"textures/texture_01.png"
+		],
+		"Physics": "Hozue_Coat_OFF.physics3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthForm",
+				"ParamMouthOpenY"
+			]
+		}
+	]
+}
