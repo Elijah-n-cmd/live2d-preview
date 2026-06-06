@@ -51,7 +51,8 @@ export const PowerImageName = 'CloseNormal.png';
 // モデルを配置したディレクトリ名の配列
 // ディレクトリ名とmodel3.jsonの名前を一致させておくこと
 export const ModelDir: string[] = [
-  'preview', 
+  'Hozue_Coat_OFF', 
+  'Hozue_Coat_ON', 
 ];
 export const ModelDirSize: number = ModelDir.length;
 
